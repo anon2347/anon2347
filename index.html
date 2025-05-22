@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
+  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2347</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Fourier Decomposition for Explicit Representation of 3D Point Cloud Attributes</h1>
+          <div class="is-size-5 publication-authors">
+
+            <span class="author-block">
+              <a>Anonymous 2347</a>
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="image-at-center">
+        <img src="./static/images/intro.png" alt="Visualizing overivew" width="80%">
+      </div>
+      <br>
+      <h2 class="subtitle has-text-centered">
+        We present <strong>Fourier Decomposition for Explicit Representation of 3D Point Cloud Attributes</strong>,
+        a Fourier-based point cloud encoding method
+that explicitly leverages amplitude and phase to represent the color
+and geometric attributes of the point cloud. This encoding enables
+effective processing across various point cloud tasks, including
+classification, style transfer, and data augmentation.
+
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          While 3D point clouds are widely utilized across various vision applications as 3D representations, their irregular nature makes them challenging to handle. 
+          In response, numerous encoding approaches have been proposed to effectively capture the rich semantic information of point clouds. 
+However, these methods have struggled to smoothly extract features that consider neighboring points while sufficiently handling attributes like color and geometry of the colored point cloud. 
+In this work, we introduce a point cloud encoding methodology that utilizes 3D Fourier decomposition to disentangle and explicitly represent color and geometric features. 
+Critically, our analysis reveals that the amplitude component from the point cloud uniquely captures and preserves detailed color attributes, while the phase component robustly encodes the intrinsic geometric structure. 
+This crucial discovery enables independent and optimized learning of both color and geometric attributes.
+Moreover, due to the spectral-domain properties of the two components, they inherently capture local features with a large receptive field that considers multiple points, markedly enhancing downstream performance.
+We validate our approach on tasks such as point cloud style transfer and classification, achieving state-of-the-art results on the DensePoint dataset and demonstrating significant improvements via an amplitude-based data augmentation strategy. 
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-3 has-text-centered">Fourier-based Point Cloud Encoding</h3>
+
+        <br>
+        <h4 class="title is-4 has-text-centered">Fourier Decomposition and Reconstruction </h4>
+        <div class="content has-text-justified">
+          <img src="./static/images/overview.png" alt="Main figure">
+          <br>
+          <p>
+            Detailed process of 3D Fourier decomposition and reconstruction. 
+    (a) The point cloud is first mapped onto a voxel grid. Since not all voxels contain points, an additional channel \(\pi\) is introduced to represent the probability of a point existing within each voxel. Fourier Transform is then applied, decomposing the voxelized point cloud into amplitude and phase.  
+    (b) The inverse Fourier Transform is applied to reconstruct voxel data from the amplitude and phase components. 
+    To eliminate noise caused by the misalignment of amplitude and phase, voxels with low \(\pi\) values are considered to be in regions where points do not exist, and their data is removed.
+          </p>
+        </div>
+
+        <br>
+        <h4 class="title is-4 has-text-centered">Intrinsic Analysis of Amplitude and Phase</h4>
+        <div class="content has-text-justified">
+          <img src="./static/images/swap.png" alt="Main figure">
+          <p>
+            Experimental analysis of amplitude and phase derived from Fourier decomposition in point clouds. Performing Fourier decom-
+position on two arbitrary point clouds separately, swapping their amplitude components, and then reconstructing each point cloud through
+Fourier reconstruction results in an exchange of color attributes between the two point clouds. Conversely, swapping the phase components
+leads to an exchange of geometric attributes, demonstrating that amplitude encodes color information while phase captures geometric
+structure.
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-3 has-text-centered">Application to Point Cloud Tasks</h3>
+
+        <br>
+        <h4 class="title is-4 has-text-centered">Point Cloud Classification </h4>
+        <div class="content has-text-justified">
+          <div class="has-text-centered">
+            <img src="./static/images/classification_fig.png" alt="Main figure" width="60%">
+          </div>
+          <br>
+          <p>
+            An illustration showing the structure of our classification model using Fourier-based point encoding. The input points
+are first decomposed into amplitude and phase through Fourier decomposition. These two components are then separately fed into a
+color encoder and a geometry encoder. The color encoder captures
+features related to color attributes, while the geometry encoder extracts features representing geometric attributes. The resulting feature representations are then concatenated and passed through a
+fusion module to generate the final feature representation.
+          </p>
+        </div>
+        <br>
+
+        <div class="content has-text-justified">
+          <div class="has-text-centered">
+            <img src="./static/images/classification_res.png" alt="Main figure" width="80%">
+          </div>
+          <br>
+          <p class="has-text-centered">
+            Quantitative comparisons of our classification model
+            against other methods.
+          </p>
+        </div>
+
+        <br>
+        <h4 class="title is-4 has-text-centered">Point Cloud Style Transfer</h4>
+        <div class="content has-text-justified">
+          <img src="./static/images/style_transfer_fig.png" alt="Main figure">
+          <p>
+            Overall pipeline of our point cloud encoding method applied to style transfer.
+    The stylized point cloud's phase is initialized to be identical to that of the content point cloud, while its amplitude is initialized through a linear interpolation between the amplitudes of the content and style point clouds. Subsequently, features are extracted from the amplitudes of the style, content, and stylized point clouds using a color encoder. The loss is then computed, and the amplitude of the stylized point cloud is iteratively updated. Once the update process is complete, the final stylized point cloud is generated by performing Fourier reconstruction using the refined amplitude and phase.
+          </p>
+        </div>
+        <br>
+
+        <div class="content has-text-justified">
+          <img src="./static/images/style_transfer_res.png" alt="Main figure">
+          <p>
+            (a) Visualization of point cloud-to-point cloud style transfer results. Each content point cloud preserves its geometric structure while adopting the color characteristics of the corresponding style point cloud.
+(b) Visualization of image-to-point cloud style transfer results. Our method extends style transfer by integrating an image's color attributes into a point cloud for effective adaptation across visual representations.
+          </p>
+        </div>
+
+        
+        <br>
+        <h4 class="title is-4 has-text-centered">Interactive Point Cloud Visualization</h4>
+        <div class="content">
+          <!-- Row 1 -->
+          <h5 class="title is-5 has-text-centered">Point Cloud to Point Cloud</h5>
+          <div class="columns is-centered">
+            <div class="column">
+              <h6 class="title is-6 has-text-centered">Content</h6>
+              <div id="point-cloud-container-content1" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+            <div class="column">
+              <h6 class="title is-6 has-text-centered">Style</h6>
+              <div id="point-cloud-container-style1" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+            <div class="column">
+              <h6 class="title is-6 has-text-centered">Result</h6>
+              <div id="point-cloud-container-result1" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+          </div>
+          
+          <!-- Row 2 -->
+          <!-- <h5 class="title is-5 has-text-centered">Example 2</h5> -->
+          <div class="columns is-centered">
+            <div class="column">
+              <!-- <h6 class="title is-6 has-text-centered">Content</h6> -->
+              <div id="point-cloud-container-content2" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+            <div class="column">
+              <!-- <h6 class="title is-6 has-text-centered">Style</h6> -->
+              <div id="point-cloud-container-style2" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+            <div class="column">
+              <!-- <h6 class="title is-6 has-text-centered">Result</h6> -->
+              <div id="point-cloud-container-result2" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+          </div>
+          
+          <!-- Row 3 -->
+          <h5 class="title is-5 has-text-centered">Image to Point Cloud</h5>
+          <div class="columns is-centered">
+            <div class="column">
+              <h6 class="title is-6 has-text-centered">Content</h6>
+              <div id="point-cloud-container-content3" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+            <div class="column">
+              <h6 class="title is-6 has-text-centered">Style</h6>
+              <div id="point-cloud-container-style3" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+            <div class="column">
+              <h6 class="title is-6 has-text-centered">Result</h6>
+              <div id="point-cloud-container-result3" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+          </div>
+          
+          <!-- Row 4 -->
+          <!-- <h5 class="title is-5 has-text-centered">Example 4</h5> -->
+          <div class="columns is-centered">
+            <div class="column">
+              <!-- <h6 class="title is-6 has-text-centered">Content</h6> -->
+              <div id="point-cloud-container-content4" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+            <div class="column">
+              <!-- <h6 class="title is-6 has-text-centered">Style</h6> -->
+              <div id="point-cloud-container-style4" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+            <div class="column">
+              <!-- <h6 class="title is-6 has-text-centered">Result</h6> -->
+              <div id="point-cloud-container-result4" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 0 auto 20px auto;"></div>
+            </div>
+          </div>
+          
+          <p class="has-text-centered">
+            Interactive visualization of point cloud data. Use mouse to rotate, scroll to zoom, and right-click to pan.
+          </p>
+        </div>
+
+        <!-- Three.js and PLY loader scripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/PLYLoader.min.js"></script>
+        
+        <script>
+          // Initialize Three.js scene for point cloud visualization
+          document.addEventListener('DOMContentLoaded', function() {
+            // Function to create a point cloud viewer
+            function createPointCloudViewer(containerId, plyFile) {
+              // Create scene, camera, and renderer
+              const container = document.getElementById(containerId);
+              const scene = new THREE.Scene();
+              scene.background = new THREE.Color(0xf0f0f0);
+              
+              const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+              camera.position.z = 5;
+              
+              const renderer = new THREE.WebGLRenderer({ antialias: true });
+              renderer.setSize(container.clientWidth, container.clientHeight);
+              container.appendChild(renderer.domElement);
+              
+              // Add lights
+              const ambientLight = new THREE.AmbientLight(0x404040);
+              scene.add(ambientLight);
+              
+              const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+              directionalLight.position.set(1, 1, 1);
+              scene.add(directionalLight);
+              
+              // Add orbit controls
+              const controls = new THREE.OrbitControls(camera, renderer.domElement);
+              controls.enableDamping = true;
+              controls.dampingFactor = 0.25;
+              
+              // Load PLY file
+              const loader = new THREE.PLYLoader();
+              let pointCloud;
+              
+              // Create point cloud material with fixed size of 0.01
+              const material = new THREE.PointsMaterial({
+                size: 0.01,
+                vertexColors: true
+              });
+              
+              loader.load(plyFile, function(geometry) {
+                geometry.computeVertexNormals();
+                
+                // Create point cloud object
+                pointCloud = new THREE.Points(geometry, material);
+                scene.add(pointCloud);
+                
+                // Center the camera on the point cloud
+                const box = new THREE.Box3().setFromObject(pointCloud);
+                const center = box.getCenter(new THREE.Vector3());
+                const size = box.getSize(new THREE.Vector3());
+                
+                const maxDim = Math.max(size.x, size.y, size.z);
+                
+                // Initialize with a specific viewpoint
+                camera.position.set(
+                  center.x + maxDim * 0.8,
+                  center.y + maxDim * 0.5,
+                  center.z + maxDim * 1.2
+                );
+                controls.target.copy(center);
+                
+                controls.update();
+              });
+              
+              // Handle window resize
+              window.addEventListener('resize', function() {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+              });
+              
+              // Animation loop
+              function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+              }
+              
+              animate();
+            }
+            
+            // Create point cloud viewers for all examples
+            // Example 1
+            createPointCloudViewer('point-cloud-container-content1', './static/models/content_18_A.ply');
+            createPointCloudViewer('point-cloud-container-style1', './static/models/style_09_A.ply');
+            createPointCloudViewer('point-cloud-container-result1', './static/models/output_18_09_A.ply');
+            
+            // Example 2
+            createPointCloudViewer('point-cloud-container-content2', './static/models/content_11_B.ply');
+            createPointCloudViewer('point-cloud-container-style2', './static/models/style_15_B.ply');
+            createPointCloudViewer('point-cloud-container-result2', './static/models/output_11_15_B.ply');
+            
+            // Example 3
+            createPointCloudViewer('point-cloud-container-content3', './static/models/content_12_bag_A.ply');
+            // Display image for style3 instead of point cloud
+            const style3Container = document.getElementById('point-cloud-container-style3');
+            const style3Image = document.createElement('img');
+            style3Image.src = './static/models/style_12_A.jpg';
+            style3Image.style.width = '100%';
+            style3Image.style.height = '100%';
+            style3Image.style.objectFit = 'contain';
+            style3Container.innerHTML = '';
+            style3Container.appendChild(style3Image);
+            
+            createPointCloudViewer('point-cloud-container-result3', './static/models/output_12_12_A.ply');
+            
+            // Example 4
+            createPointCloudViewer('point-cloud-container-content4', './static/models/content_18_etc_B.ply');
+            // Display image for style4 instead of point cloud
+            const style4Container = document.getElementById('point-cloud-container-style4');
+            const style4Image = document.createElement('img');
+            style4Image.src = './static/models/style_05_B.jpg';
+            style4Image.style.width = '100%';
+            style4Image.style.height = '100%';
+            style4Image.style.objectFit = 'contain';
+            style4Container.innerHTML = '';
+            style4Container.appendChild(style4Image);
+            
+            createPointCloudViewer('point-cloud-container-result4', './static/models/output_18_05_B.ply');
+          });
+        </script>
+      </div>
+    </div>
+  </div>
+
+  <br>
+        <h4 class="title is-4 has-text-centered">Data Augmentation </h4>
+
+
+        <div class="content has-text-justified">
+          <div class="has-text-centered">
+            <img src="./static/images/augmentation_res.png" alt="Main figure" width="30%">
+          </div>
+          <br>
+          <p class="has-text-centered">
+            Performance comparison of various classification models with and without our data augmentation technique.
+          </p>
+        </div>
+  
+</section>
+
+
+
+<footer class="footer">
+  <div class="container">
+
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./static/js/tag-height.js"></script>
+
+</body>
+</html>
